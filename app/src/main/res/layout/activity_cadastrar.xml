@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background1"
+    tools:context=".CadastrarActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="298dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="55dp"
+        app:layout_constraintBottom_toTopOf="@+id/txNomeCompleto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logocadastro" />
+
+    <EditText
+        android:id="@+id/txNomeCompleto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:backgroundTint="#ffff"
+        android:ems="10"
+        android:fontFamily="@font/roboto"
+        android:hint="Nome Completo"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="#ffff"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/txEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/txEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="55dp"
+        android:backgroundTint="#ffff"
+        android:ems="10"
+        android:fontFamily="@font/roboto"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="#ffff"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/txSenha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txNomeCompleto" />
+
+    <EditText
+        android:id="@+id/txSenha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="55dp"
+        android:backgroundTint="#ffff"
+        android:ems="10"
+        android:fontFamily="@font/roboto"
+        android:hint="Senha"
+        android:inputType="textPassword"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="#ffff"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/txConfirmarSenha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txEmail" />
+
+    <EditText
+        android:id="@+id/txConfirmarSenha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="55dp"
+        android:backgroundTint="#ffff"
+        android:ems="10"
+        android:fontFamily="@font/roboto"
+        android:hint="Confirmar Senha"
+        android:inputType="textPassword"
+        android:textColor="#ffff"
+        android:textColorHint="#ffff"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txSenha" />
+
+    <CheckBox
+        android:id="@+id/cbTermoAdesao"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:text="Eu li e aceito o termo de adesão e condições gerais de uso"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/cvNovidades"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <CheckBox
+        android:id="@+id/cvNovidades"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:text="Desejo receber novidades, convites, e informes do AdoteUmPet"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bttnConfirmar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbTermoAdesao" />
+
+    <Button
+        android:id="@+id/bttnConfirmar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/botaopadrao"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Confirmar"
+        android:textAllCaps="false"
+        android:textColor="#ffff"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Escolha uma das opções abaixo:"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txConfirmarSenha" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/cbTermoAdesao"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Adotar"
+            android:textColor="@color/colorAccent"
+            android:textSize="16dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Doar"
+            android:textColor="@color/colorAccent"
+            android:textSize="16dp" />
+
+
+    </RadioGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

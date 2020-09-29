@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1070132799539",
+    "firebase_url": "https://adoteumpet-7afd7.firebaseio.com",
+    "project_id": "adoteumpet-7afd7",
+    "storage_bucket": "adoteumpet-7afd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070132799539:android:e10eb59015039650185b46",
+        "android_client_info": {
+          "package_name": "br.com.adoteumpet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070132799539-5smte43m10hu83lbkpcfr55mu58hbss4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.adoteumpet",
+            "certificate_hash": "9523e8de4b81fcd3c48a2a8b730a3760dd72bd22"
+          }
+        },
+        {
+          "client_id": "1070132799539-otgnn8vje8bdv3r4gidcuho1611egu1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW5akHSIKmJp-pijuMpZOM0nIpO1LBlK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1070132799539-otgnn8vje8bdv3r4gidcuho1611egu1v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
