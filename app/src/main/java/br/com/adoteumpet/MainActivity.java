@@ -1,12 +1,24 @@
 package br.com.adoteumpet;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -14,7 +26,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-
+    private FirebaseAuth mAuth;
     private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
     private int i;
@@ -24,15 +36,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
+
+        checkUserSex();
         al = new ArrayList<>();
-        al.add("php");
-        al.add("c");
-        al.add("python");
-        al.add("java");
-        al.add("html");
-        al.add("c++");
-        al.add("css");
-        al.add("javascript");
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
 
@@ -63,16 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-                al.add("XML".concat(String.valueOf(i)));
-                arrayAdapter.notifyDataSetChanged();
-                Log.d("LIST", "notified");
-                i++;
             }
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-
             }
         });
 
@@ -85,5 +86,92 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String userAdotar;
+    private String userOpossitOpt;
+    public void checkUserSex(){
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference AdotarDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Adotar");
+        AdotarDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String previousChildName) {
+                if(dataSnapshot.getKey().equals(user.getUid())){
+                    userAdotar = "Adotar";
+                    userOpossitOpt = "Doar";
+                    getOppositOptUsers();
+                }
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot,String previousChildName) {
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        DatabaseReference DoarDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Doar");
+        DoarDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String previousChildName) {
+                if(dataSnapshot.getKey().equals(user.getUid())){
+                    userAdotar = "Doar";
+                    userOpossitOpt = "Adotar";
+                    getOppositOptUsers();
+                }
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot,String previousChildName) {
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+    }
+
+    public void getOppositOptUsers(){
+        DatabaseReference OppositOptDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userOpossitOpt);
+        OppositOptDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String previousChildName) {
+               if(dataSnapshot.exists()){
+                   al.add(dataSnapshot.child("nome").getValue().toString());
+                   arrayAdapter.notifyDataSetChanged();
+               }
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot,String previousChildName) {
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    public void logoutUser(View view) {
+        mAuth.signOut();
+        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

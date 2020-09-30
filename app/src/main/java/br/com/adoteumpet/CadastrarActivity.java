@@ -22,6 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CadastrarActivity extends AppCompatActivity {
     private Button bttnConfirmar;
     private EditText txNomeCompleto, txEmail, txSenha, txConfirmarSenha;
@@ -44,16 +47,6 @@ public class CadastrarActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                // Se o usuario estiver autenticado
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                //caso o usuario seja diferente de nulo
-                if (user !=null){
-
-                    //abrir a tela home
-                    Intent intent = new Intent(CadastrarActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
             }
         };
 
@@ -77,15 +70,17 @@ public class CadastrarActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                int selectId = rdAdotarDoar.getCheckedRadioButtonId();
+                final RadioButton radioButton = (RadioButton) findViewById(selectId);
+
+
                 //Passar o texto para String
                 final String nomecompleto = txNomeCompleto.getText().toString();
                 final String email = txEmail.getText().toString();
                 final String senha = txSenha.getText().toString();
                 final String confirmarsenha = txConfirmarSenha.getText().toString();
 
-                //Declarar os Radiobutton junto com o rdAdotarDoar
-                int selectId = rdAdotarDoar.getCheckedRadioButtonId();
-                final RadioButton radioButton = (RadioButton) findViewById(selectId);
+
 
                 //Vefificar se todos os campos estão preenchidos
                 if (nomecompleto.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmarsenha.isEmpty() || radioButton == null) {
@@ -106,7 +101,6 @@ public class CadastrarActivity extends AppCompatActivity {
 
                     //Se os campos estivem preenchidos
                 } else {
-
                     // Verificar se o Termo de adesso esta marcado
                     if(cbTermoAdesao.isChecked()) {
 
@@ -138,14 +132,11 @@ public class CadastrarActivity extends AppCompatActivity {
 
                                             //Caso o cadastro seja sucedido
                                         } else {
-                                            //Definir que o userId é de acordo com o dado pego no CurrentUser
                                             String userId = mAuth.getCurrentUser().getUid();
-
-                                            //Imputar os dados Como Users, Opção de adotar/doar, e nome no database
                                             DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId).child("nome");
-
-                                            //Declarando que o nnome é igual o nome completo.
                                             currentUserDb.setValue(nomecompleto);
+                                            Intent intent = new Intent(CadastrarActivity.this, VerificaremlActivity.class);
+                                            startActivity(intent);
                                         }
                                     }
                                 });
