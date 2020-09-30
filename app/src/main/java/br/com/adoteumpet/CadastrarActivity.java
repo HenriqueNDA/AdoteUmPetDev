@@ -122,15 +122,14 @@ public class CadastrarActivity extends AppCompatActivity {
                                         if (!task.isSuccessful()) {
 
                                             //Enviar um Toast de erro
-                                            toastError = Toast.makeText(CadastrarActivity.this, "Erro ao cadastrar-se", Toast.LENGTH_LONG);
+                                            String mensagem = task.getException().getMessage();
+                                            toastError = Toast.makeText(CadastrarActivity.this, "Ocorreu um erro: " + mensagem, Toast.LENGTH_LONG);
 
                                             //Tempo de duração do Toast
                                             new CountDownTimer(1000, 200) {
                                                 @Override
-                                                public void onTick(long millisUntilFinished) {
-                                                    toastError.show();
+                                                public void onTick(long millisUntilFinished) { toastError.show();
                                                 }
-
                                                 @Override
                                                 public void onFinish() {
                                                     toastError.cancel();

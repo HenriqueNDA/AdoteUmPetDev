@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
-    private Button bttnCriarConta, bttnLogar;
+    private Button bttnCriarConta, bttnLogar, bttnEsqueceuSenha;
     private Toast toastVoltar, toastError, toastcampos;
     private EditText txEmail, txSenha;
 
@@ -48,9 +48,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //Declarar Botão logar
+        //Declarar Botoes
         bttnLogar = (Button) findViewById(R.id.bttnLogar);
         bttnCriarConta = (Button) findViewById(R.id.bttnCriarConta);
+        bttnEsqueceuSenha = (Button) findViewById(R.id.bttnEsqueceuSenha);
 
         //Declarar Textos
         txEmail = (EditText) findViewById(R.id.txEmail);
@@ -75,6 +76,15 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, CadastrarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Ao clicar no botão Esqueceu a senha
+        bttnEsqueceuSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, EsqueceuasenhaActivity.class);
                 startActivity(intent);
             }
         });
@@ -115,7 +125,8 @@ public class HomeActivity extends AppCompatActivity {
                             if (!task.isSuccessful()) {
 
                                 //Enviar um alerta de erro
-                                toastError = Toast.makeText(HomeActivity.this, "Verifique seu E-mail/Senha", Toast.LENGTH_LONG);
+                                String mensagem = task.getException().getMessage();
+                                toastError = Toast.makeText(HomeActivity.this, "Ocorreu um erro: " + mensagem, Toast.LENGTH_LONG);
 
                                 //Tempo de duração do Toast
                                 new CountDownTimer(1000, 200) {

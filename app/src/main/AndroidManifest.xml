@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< Updated upstream
         <activity android:name=".CadastrarActivity"></activity>
+=======
+        <activity android:name=".EsqueceuasenhaActivity"></activity>
+        <activity android:name=".VerificaremlActivity" />
+        <activity android:name=".CadastrarActivity" />
+>>>>>>> Stashed changes
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SplashActivity">
