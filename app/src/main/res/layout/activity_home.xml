@@ -55,6 +55,7 @@
         android:hint="Senha"
         android:inputType="textPassword"
         android:textColorHint="#ffff"
+        android:textColor="#ffff"
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/bttnEsqueceuSenha"
         app:layout_constraintEnd_toEndOf="parent"

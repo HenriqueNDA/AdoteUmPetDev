@@ -63,9 +63,11 @@ public class HomeActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user !=null){
-
-                    Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    user.reload();
+                    if (user.isEmailVerified()){
+                        Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         };
@@ -129,7 +131,14 @@ public class HomeActivity extends AppCompatActivity {
                                 }.start();
 
                             } else {
-                                Toast.makeText(HomeActivity.this, "Logado", Toast.LENGTH_LONG).show();
+                                if (mAuth.getCurrentUser().isEmailVerified()){
+                                    Toast.makeText(HomeActivity.this, "Logado", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                } else{
+                                    Toast.makeText(HomeActivity.this, "Sua conta ainda não foi verificada! Favor verificar seu email!", Toast.LENGTH_LONG).show();
+                                    mAuth.getCurrentUser().sendEmailVerification();
+                                }
                             }
                         }
                     });
