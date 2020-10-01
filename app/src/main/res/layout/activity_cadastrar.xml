@@ -102,7 +102,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txSenha" />
 
     <CheckBox
-        android:id="@+id/cbTermoAdesao"
+        android:id="@+id/CheckBoxTermoAdesao"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginStart="55dp"
@@ -137,7 +137,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cbTermoAdesao" />
+        app:layout_constraintTop_toBottomOf="@+id/CheckBoxTermoAdesao" />
 
     <TextView
         android:id="@+id/textView3"
@@ -164,7 +164,7 @@
         android:layout_marginEnd="55dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        app:layout_constraintBottom_toTopOf="@+id/cbTermoAdesao"
+        app:layout_constraintBottom_toTopOf="@+id/CheckBoxTermoAdesao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -189,9 +189,18 @@
             android:textColor="#000000"
             android:text="Doar"
             android:textSize="16dp" />
-
-
     </RadioGroup>
+
+    <ProgressBar
+        android:id="@+id/ProgressBarCarregar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bttnConfirmar"
+        app:layout_constraintEnd_toEndOf="@+id/bttnConfirmar"
+        app:layout_constraintTop_toTopOf="@+id/bttnConfirmar"
+        tools:visibility="invisible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
