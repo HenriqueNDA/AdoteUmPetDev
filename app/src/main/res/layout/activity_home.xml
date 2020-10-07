@@ -146,6 +146,8 @@
         android:layout_marginBottom="155dp"
         android:background="@drawable/botaopadrao"
         android:fontFamily="@font/roboto_bold"
+        android:scrollbarTrackHorizontal="@drawable/botaopadrao"
+        android:scrollbarTrackVertical="@drawable/botaopadrao"
         android:text="Logar"
         android:textAllCaps="false"
         android:textColor="#FFFF"
