@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -22,12 +23,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CadastrarActivity extends AppCompatActivity {
-    private Button bttnConfirmar;
-    private EditText txNomeCompleto, txEmail, txSenha, txConfirmarSenha;
-    private CheckBox cbTermoAdesao, cvNovidades;
-    private Toast toastError, toastcampos, toasttermo;
-    private RadioGroup rdAdotarDoar;
+    private Button vbttnConfirmar;
+    private EditText vtxNomeCompleto, vtxEmail, vtxSenha, vtxConfirmarSenha;
+    private CheckBox vCheckBoxTermoAdesao;
+    private Toast vtoastError, vtoastcampos, vtoasttermo;
+    private RadioGroup vrdAdotarDoar;
+    private ProgressBar vProgressBarCarregar;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
@@ -43,151 +48,160 @@ public class CadastrarActivity extends AppCompatActivity {
         firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
-                // Se o usuario estiver autenticado
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                //caso o usuario seja diferente de nulo
-                if (user !=null){
-
-                    //abrir a tela home
-                    Intent intent = new Intent(CadastrarActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
             }
         };
 
         //Declarar Botão
-        bttnConfirmar = (Button) findViewById(R.id.bttnConfirmar);
+        vbttnConfirmar = (Button) findViewById(R.id.bttnConfirmar);
 
         //Declarar Textos
-        txNomeCompleto = (EditText) findViewById(R.id.txNomeCompleto);
-        txEmail = (EditText) findViewById(R.id.txEmail);
-        txSenha = (EditText) findViewById(R.id.txSenha);
-        txConfirmarSenha = (EditText) findViewById(R.id.txConfirmarSenha);
+        vtxNomeCompleto = (EditText) findViewById(R.id.txNomeCompleto);
+        vtxEmail = (EditText) findViewById(R.id.txEmail);
+        vtxSenha = (EditText) findViewById(R.id.txSenha);
+        vtxConfirmarSenha = (EditText) findViewById(R.id.txConfirmarSenha);
 
         //Declarar Checkbox de adesao
-        cbTermoAdesao = (CheckBox) findViewById(R.id.cbTermoAdesao);
+        vCheckBoxTermoAdesao = (CheckBox) findViewById(R.id.CheckBoxTermoAdesao);
 
         //Declarar Radio Grupo
-        rdAdotarDoar = (RadioGroup) findViewById(R.id.radioGroup);
+        vrdAdotarDoar = (RadioGroup) findViewById(R.id.radioGroup);
+
+        //Declarar ProgressBar
+        vProgressBarCarregar = (ProgressBar) findViewById(R.id.ProgressBarCarregar);
 
         //Ao Clicar no botão confirmar
-        bttnConfirmar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        vbttnConfirmar.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
 
-                //Passar o texto para String
-                final String nomecompleto = txNomeCompleto.getText().toString();
-                final String email = txEmail.getText().toString();
-                final String senha = txSenha.getText().toString();
-                final String confirmarsenha = txConfirmarSenha.getText().toString();
+       int selectId = vrdAdotarDoar.getCheckedRadioButtonId();
+       final RadioButton radioButton = (RadioButton) findViewById(selectId);
 
-                //Declarar os Radiobutton junto com o rdAdotarDoar
-                int selectId = rdAdotarDoar.getCheckedRadioButtonId();
-                final RadioButton radioButton = (RadioButton) findViewById(selectId);
 
-                //Vefificar se todos os campos estão preenchidos
-                if (nomecompleto.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmarsenha.isEmpty() || radioButton == null) {
+       //Passar o texto para String
+       final String nomecompleto = vtxNomeCompleto.getText().toString();
+       final String email = vtxEmail.getText().toString();
+       final String senha = vtxSenha.getText().toString();
+       final String confirmarsenha = vtxConfirmarSenha.getText().toString();
 
-                    //Se os campos estiverem vazio envie uma alerta
-                    toastcampos = Toast.makeText(CadastrarActivity.this, "Complete todos os campos", Toast.LENGTH_SHORT);
+        //Vefificar se todos os campos estão preenchidos
+        if (nomecompleto.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmarsenha.isEmpty() || radioButton == null) {
+           //Se os campos estiverem vazio envie uma alerta
+           vtoastcampos = Toast.makeText(CadastrarActivity.this, "Preencha todos os campos ", Toast.LENGTH_SHORT);
 
-                    //Tempo de duração da alerta
-                    new CountDownTimer(1000, 200) {
-                        @Override
-                        public void onTick(long millisUntilFinished) { toastcampos.show();
-                        }
-                        @Override
-                        public void onFinish() {
-                            toastcampos.cancel();
-                        }
-                    }.start();
+           //Tempo de duração da alerta
+            new CountDownTimer(1000, 200) {
+                @Override
+                 public void onTick(long millisUntilFinished) {
+                    vtoastcampos.show();
+                 }
+                 @Override
+                  public void onFinish() {
+                     vtoastcampos.cancel();
+                  }
+            }.start();
+            //Se os campos estivem preenchidos
+        } else {
+          // Verificar se o Termo de adesso esta marcado
+          if(vCheckBoxTermoAdesao.isChecked()) {
 
-                    //Se os campos estivem preenchidos
-                } else {
+                //Verificar se a senhas sao iguais
+                if (senha.equals(confirmarsenha)) {
 
-                    // Verificar se o Termo de adesso esta marcado
-                    if(cbTermoAdesao.isChecked()) {
+                    //Cadastrar a conta usando o email e senha digitado
+                    mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(CadastrarActivity.this, new OnCompleteListener<AuthResult>() {
+                     @Override
+                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        //Verificar se a senhas sao iguais
-                        if (senha.equals(confirmarsenha)) {
+                         //Caso algum dado não seja valido/ou de erro no cadastro
+                         if (!task.isSuccessful()) {
+                             //Desativar botão e ativar Progressbar
+                             vProgressBarCarregar.setVisibility(View.VISIBLE);
+                             vbttnConfirmar.setEnabled(false);
 
-                                //Cadastrar a conta usando o email e senha digitado
-                                mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(CadastrarActivity.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                             //Enviar um Toast de erro
+                             String mensagem = task.getException().getMessage();
+                             vtoastError = Toast.makeText(CadastrarActivity.this, "Ocorreu um erro: " + mensagem, Toast.LENGTH_LONG);
 
-                                        //Caso algum dado não seja valido/ou de erro no cadastro
-                                        if (!task.isSuccessful()) {
+                             //Tempo de duração do Toast
+                             new CountDownTimer(1500, 200) {
+                              @Override
+                              public void onTick(long millisUntilFinished) {
 
-                                            //Enviar um Toast de erro
-                                            toastError = Toast.makeText(CadastrarActivity.this, "Erro ao cadastrar-se", Toast.LENGTH_LONG);
+                                  vtoastError.show();
+                              }
+                               @Override
+                               public void onFinish() {
+                                      vProgressBarCarregar.setVisibility(View.INVISIBLE);
+                                      vbttnConfirmar.setEnabled(true);
+                                      vtoastError.cancel();
+                               }
+                               }.start();
+                                //Caso o cadastro seja sucedido
+                                 } else {
+                                     //Seta userId com o Uid do usuario
+                                     String userId = mAuth.getCurrentUser().getUid();
 
-                                            //Tempo de duração do Toast
-                                            new CountDownTimer(1000, 200) {
-                                                @Override
-                                                public void onTick(long millisUntilFinished) {
-                                                    toastError.show();
-                                                }
+                                     //Salva os dados do User, No Nome
+                                     DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId).child("nome");
+                                     currentUserDb.setValue(nomecompleto);
 
-                                                @Override
-                                                public void onFinish() {
-                                                    toastError.cancel();
-                                                }
-                                            }.start();
+                                     //Tempo de duração do Toast
+                                     new CountDownTimer(1500, 200) {
+                                         @Override
+                                         public void onTick(long millisUntilFinished) {
+                                             //Desativar botão e ativar Progressbar
+                                             vProgressBarCarregar.setVisibility(View.VISIBLE);
+                                             vbttnConfirmar.setEnabled(false);
+                                         }
+                                         @Override
+                                         public void onFinish() {
+                                             //Vai para tela de verificar email
+                                             Intent intent = new Intent(CadastrarActivity.this, VerificaremlActivity.class);
+                                             startActivity(intent);
+                                         }
+                                     }.start();
+                                 }
+                         }
+                     });
 
-                                            //Caso o cadastro seja sucedido
-                                        } else {
-                                            //Definir que o userId é de acordo com o dado pego no CurrentUser
-                                            String userId = mAuth.getCurrentUser().getUid();
+                     //Caso as senhas não sejam iguais
+                     } else {
+                       //Envie um alerta
+                       vtoasttermo = Toast.makeText(CadastrarActivity.this, "Senhas digitadas não conferem !", Toast.LENGTH_LONG);
 
-                                            //Imputar os dados Como Users, Opção de adotar/doar, e nome no database
-                                            DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId).child("nome");
-
-                                            //Declarando que o nnome é igual o nome completo.
-                                            currentUserDb.setValue(nomecompleto);
-                                        }
-                                    }
-                                });
-
-                            //Caso as senhas não sejam iguais
-                        } else {
-                            //Envie um alerta
-                            toasttermo = Toast.makeText(CadastrarActivity.this, "As senhas não estão iguais!!", Toast.LENGTH_LONG);
-
-                            //Tempo de duração do Toast
-                            new CountDownTimer(1800, 400) {
-                                @Override
-                                public void onTick(long millisUntilFinished) { toasttermo.show();
-                                }
-                                @Override
-                                public void onFinish() {
-                                    toasttermo.cancel();
-                                }
-                            }.start();
-                        }
+                       //Tempo de duração do Toast
+                       new CountDownTimer(1800, 400) {
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                vtoasttermo.show();
+                            }
+                            @Override
+                            public void onFinish() {
+                                vtoasttermo.cancel();
+                             }
+                        }.start();
+                     }
                     } else {
                         //Se os campos estiverem vazio envie um Tost
-                        toasttermo = Toast.makeText(CadastrarActivity.this, "Você deve aceitar com os termos de adesão e uso.", Toast.LENGTH_LONG);
+                        vtoasttermo = Toast.makeText(CadastrarActivity.this, "Você deve aceitar os termos de uso.", Toast.LENGTH_LONG);
 
                         //Tempo de duração do Toast
                         new CountDownTimer(1800, 400) {
                             @Override
-                            public void onTick(long millisUntilFinished) { toasttermo.show();
-                            }
+                            public void onTick(long millisUntilFinished) {
+                                vtoasttermo.show(); }
                             @Override
                             public void onFinish() {
-                                toasttermo.cancel();
+                                vtoasttermo.cancel();
                             }
                         }.start();
                     }
                 }
             }
         });
-
-
     }
+
     protected void onStart(){
         super.onStart();
         mAuth.addAuthStateListener(firebaseAuthStateListener);

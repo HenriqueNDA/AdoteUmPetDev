@@ -12,7 +12,7 @@
         android:layout_width="298dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="55dp"
         app:layout_constraintBottom_toTopOf="@+id/txNomeCompleto"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,12 +31,12 @@
         android:fontFamily="@font/roboto"
         android:hint="Nome Completo"
         android:inputType="textPersonName"
-        android:textColor="@color/colorAccent"
+        android:textColor="#ffff"
         android:textColorHint="#ffff"
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/txEmail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -52,7 +52,7 @@
         android:fontFamily="@font/roboto"
         android:hint="E-mail"
         android:inputType="textEmailAddress"
-        android:textColor="@color/colorAccent"
+        android:textColor="#ffff"
         android:textColorHint="#ffff"
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/txSenha"
@@ -72,7 +72,7 @@
         android:fontFamily="@font/roboto"
         android:hint="Senha"
         android:inputType="textPassword"
-        android:textColor="@color/colorAccent"
+        android:textColor="#ffff"
         android:textColorHint="#ffff"
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/txConfirmarSenha"
@@ -102,44 +102,32 @@
         app:layout_constraintTop_toBottomOf="@+id/txSenha" />
 
     <CheckBox
-        android:id="@+id/cbTermoAdesao"
+        android:id="@+id/CheckBoxTermoAdesao"
         android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_height="44dp"
         android:layout_marginStart="55dp"
         android:layout_marginEnd="55dp"
+        android:autoLink="web"
         android:fontFamily="@font/roboto"
         android:gravity="center"
         android:text="Eu li e aceito o termo de adesão e condições gerais de uso"
+        android:textColor="#000000"
         android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/cvNovidades"
+        app:layout_constraintBottom_toTopOf="@+id/bttnConfirmar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
-    <CheckBox
-        android:id="@+id/cvNovidades"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginEnd="55dp"
-        android:fontFamily="@font/roboto"
-        android:gravity="center"
-        android:text="Desejo receber novidades, convites, e informes do AdoteUmPet"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/bttnConfirmar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cbTermoAdesao" />
 
     <Button
         android:id="@+id/bttnConfirmar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="55dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/botaopadrao"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/botao"
         android:fontFamily="@font/roboto_bold"
         android:text="Confirmar"
         android:textAllCaps="false"
@@ -148,19 +136,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CheckBoxTermoAdesao" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="55dp"
         android:fontFamily="@font/roboto_bold"
         android:text="Escolha uma das opções abaixo:"
+        android:textColor="#FFFF"
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txConfirmarSenha" />
 
@@ -171,30 +163,44 @@
         android:layout_marginStart="55dp"
         android:layout_marginEnd="55dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/cbTermoAdesao"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toTopOf="@+id/CheckBoxTermoAdesao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <RadioButton
+            android:layout_marginHorizontal="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_bold"
+            android:fontFamily="@font/roboto"
             android:text="Adotar"
-            android:textColor="@color/colorAccent"
+            android:padding="1dp"
+            android:textColor="#000000"
             android:textSize="16dp" />
 
         <RadioButton
+            android:layout_marginHorizontal="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_bold"
+            android:padding="5dp"
+            android:fontFamily="@font/roboto"
+            android:textColor="#000000"
             android:text="Doar"
-            android:textColor="@color/colorAccent"
             android:textSize="16dp" />
-
-
     </RadioGroup>
+
+    <ProgressBar
+        android:id="@+id/ProgressBarCarregar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bttnConfirmar"
+        app:layout_constraintEnd_toEndOf="@+id/bttnConfirmar"
+        app:layout_constraintTop_toTopOf="@+id/bttnConfirmar"
+        tools:visibility="invisible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

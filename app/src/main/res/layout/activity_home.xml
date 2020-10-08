@@ -55,6 +55,7 @@
         android:hint="Senha"
         android:inputType="textPassword"
         android:textColorHint="#ffff"
+        android:textColor="#ffff"
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/bttnEsqueceuSenha"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +65,7 @@
 
     <Button
         android:id="@+id/bttnEsqueceuSenha"
-        android:layout_width="144dp"
+        android:layout_width="0dp"
         android:layout_height="22dp"
         android:layout_marginStart="215dp"
         android:layout_marginEnd="55dp"
@@ -97,10 +98,10 @@
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/bttnLogarFacebook"
-        app:layout_constraintVertical_bias="0.416" />
+        app:layout_constraintTop_toBottomOf="@+id/bttnLogar"
+        app:layout_constraintVertical_bias="0.487" />
 
     <TextView
         android:id="@+id/textView"
@@ -114,37 +115,19 @@
         android:textColor="#898989"
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bttnLogarFacebook" />
-
-    <Button
-        android:id="@+id/bttnLogarFacebook"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="55dp"
-        android:background="@drawable/botao_facebook"
-        android:backgroundTint="#3B5998"
-        android:fontFamily="@font/roboto_bold"
-        android:text="Conectar com facebook"
-        android:textAllCaps="false"
-        android:textColor="#FFFF"
-        android:textSize="17dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/bttnCriarConta"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bttnLogar" />
 
     <Button
         android:id="@+id/bttnLogar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="46dp"
         android:layout_marginStart="55dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="55dp"
         android:layout_marginBottom="155dp"
-        android:background="@drawable/botaopadrao"
+        android:background="@drawable/botao"
         android:fontFamily="@font/roboto_bold"
         android:text="Logar"
         android:textAllCaps="false"
@@ -155,4 +138,15 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bttnEsqueceuSenha" />
+
+    <ProgressBar
+        android:id="@+id/ProgressBarCarregar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bttnLogar"
+        app:layout_constraintEnd_toEndOf="@+id/bttnLogar"
+        app:layout_constraintTop_toTopOf="@+id/bttnLogar"
+        tools:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
