@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">Adote Um Pet</string>
+    <string-array name="Spinner_ItemsTipo">
+        <item>Selecione uma opção</item>
+        <item>Gato</item>
+        <item>Cachorro</item>
+    </string-array>
+    <string-array name="Spinner_ItemsPorte">
+        <item>Selecione uma opção</item>
+        <item>Mini</item>
+        <item>Pequeno</item>
+        <item>Médio</item>
+        <item>Grande</item>
+    </string-array>
+    <string-array name="Spinner_ItemsIdade">
+        <item>Selecione uma opção</item>
+        <item>Filhote</item>
+        <item>Adolecente</item>
+        <item>Adulto</item>
+        <item>Idoso</item>
+    </string-array>
+    <string-array name="botoes_opcoes">
+        <item>Edite seu perfil</item>
+        <item>Minhas preferências</item>
+        <item>Convidar amigos</item>
+        <item>Precisa de ajuda</item>
+        //<item>Sair</item>
+    </string-array>
+    <string-array name="botoes_opcoes_descricoes">
+        <item>Edite suas informações.</item>
+        <item>Escolha as caracteristicas que deseja ter em um pet.</item>
+        <item>Convide o seus amigos e ajude na divulgação do app.</item>
+        <item>FAQ, tutoriais e contato.</item>
+        <item>Sair da sua conta.</item>
+    </string-array>
 </resources>
