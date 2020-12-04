@@ -3,13 +3,13 @@ package br.com.adoteumpet;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,89 +18,92 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import br.com.adoteumpet.Adicional.localizacaoActivity;
+import br.com.adoteumpet.Home.EsqueceuasenhaActivity;
+
 public class HomeActivity extends AppCompatActivity {
-    private Button bttnCriarConta, bttnLogar;
-    private Toast toastVoltar, toastError, toastcampos;
-    private EditText txEmail, txSenha;
+    //Button
+    private Button mbttnLogin;
 
+    //Toasts
+    private Toast mtoastError, mtoastfields;
 
+    //EditText
+    private EditText mtxUseremail, mtxUserpassword;
+
+    //ProgressBar
+    private ProgressBar mProgressBarLoad;
+
+    //Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
 
     @Override
+    //Se o usuario apertar o botão de voltar
     public void onBackPressed()
     {
-        toastVoltar = Toast.makeText(HomeActivity.this, "Não é possivel voltar.", Toast.LENGTH_LONG);
-        toastVoltar.show();
-        new CountDownTimer(1000,200){
-            @Override
-            public void onTick(long millisUntilFinished) {
-                toastVoltar.show();
-            }
-            @Override
-            public void onFinish() {
-                toastVoltar.cancel();
-            }
-        }.start();
+        //Finalizar aplicativo
+        finishAffinity();
+        finish();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //Declarar Botão logar
-        bttnLogar = (Button) findViewById(R.id.bttnLogar);
-        bttnCriarConta = (Button) findViewById(R.id.bttnCriarConta);
+        //Botão
+        mbttnLogin = (Button) findViewById(R.id.bttnLogar);
 
-        //Declarar Textos
-        txEmail = (EditText) findViewById(R.id.txEmail);
-        txSenha = (EditText) findViewById(R.id.txSenha);
+        //EditTexts
+        mtxUseremail = (EditText) findViewById(R.id.txUseremail);
+        mtxUserpassword = (EditText) findViewById(R.id.txUserpassword);
 
-        //Declarar Firebase
+        //ProgressBar
+        mProgressBarLoad = (ProgressBar) findViewById(R.id.ProgressBarLoad);
+
+        //Firebase
         mAuth = FirebaseAuth.getInstance();
         firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user !=null){
-
-                    Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    user.reload();
+                    if (user.isEmailVerified()){
+                        Intent intent = new Intent(HomeActivity.this, localizacaoActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         };
 
-        //Ao clicar no botão Cadastrar-se
-        bttnCriarConta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, CadastrarActivity.class);
-                startActivity(intent);
-            }
-        });
-
         //Ao Clicar no botão Logar
-        bttnLogar.setOnClickListener(new View.OnClickListener() {
+        mbttnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //Passar o texto para String
-                final String email = txEmail.getText().toString();
-                final String senha = txSenha.getText().toString();
+                final String email = mtxUseremail.getText().toString();
+                final String senha = mtxUserpassword.getText().toString();
 
                 //Verificar se os campos E-mail/Senha estão preenchidos
                 if (email.isEmpty() || senha.isEmpty()) {
                     //Se os campos estiverem vazio envie uma alerta
-                    toastcampos = Toast.makeText(HomeActivity.this, "Complete todos os campos", Toast.LENGTH_SHORT);
+                    mtoastfields = Toast.makeText(HomeActivity.this, "Preencha todos os campos ", Toast.LENGTH_SHORT);
 
                     //Tempo de duração da alerta
                     new CountDownTimer(1000, 200) {
                         @Override
-                        public void onTick(long millisUntilFinished) { toastcampos.show();
+                        //No Começo do contador
+                        public void onTick(long millisUntilFinished) {
+                            //Mostrar Toast
+                            mtoastfields.show();
                         }
                         @Override
+                        //No fim do contador
                         public void onFinish() {
-                            toastcampos.cancel();
+                            //Cancelar o Toast
+                            mtoastfields.cancel();
                         }
                     }.start();
 
@@ -113,23 +116,53 @@ public class HomeActivity extends AppCompatActivity {
 
                             //Caso não encontre o login informado
                             if (!task.isSuccessful()) {
-
                                 //Enviar um alerta de erro
-                                toastError = Toast.makeText(HomeActivity.this, "Verifique seu E-mail/Senha", Toast.LENGTH_LONG);
+                                String mensagem = task.getException().getMessage();
+                                mtoastError = Toast.makeText(HomeActivity.this, "Ocorreu um erro: " + mensagem, Toast.LENGTH_LONG);
 
                                 //Tempo de duração do Toast
-                                new CountDownTimer(1000, 200) {
+                                new CountDownTimer(1500, 200) {
                                     @Override
-                                    public void onTick(long millisUntilFinished) { toastError.show();
+                                    //No começo do contador
+                                    public void onTick(long millisUntilFinished) {
+                                        //Mostrar toast de erro
+                                        mtoastError.show();
+
+                                        //Deixar o progressbar visivel
+                                        mProgressBarLoad.setVisibility(View.VISIBLE);
+
+                                        //Desativar o botão login
+                                        mbttnLogin.setEnabled(false);
                                     }
                                     @Override
+                                    //No fim do contador
                                     public void onFinish() {
-                                        toastError.cancel();
+                                        //Deixar o progressBar invisivel
+                                        mProgressBarLoad.setVisibility(View.INVISIBLE);
+
+                                        //Ativar o botão de login
+                                        mbttnLogin.setEnabled(true);
+
+                                        //Cancelar o toast
+                                        mtoastError.cancel();
                                     }
                                 }.start();
 
                             } else {
-                                Toast.makeText(HomeActivity.this, "Logado", Toast.LENGTH_LONG).show();
+                                //Se o usuario atual estiver com o email verificado
+                                if (mAuth.getCurrentUser().isEmailVerified()){
+                                    //Ir para a tela de localização
+                                    Intent intent = new Intent(HomeActivity.this, localizacaoActivity.class);
+                                    startActivity(intent);
+
+                                    //Caso Contrario
+                                } else{
+                                    //Mostar um alerta
+                                    Toast.makeText(HomeActivity.this, "Verifique seu e-mail, é necessário verificar a conta", Toast.LENGTH_LONG).show();
+
+                                    //Enviar email para verificação da conta
+                                    mAuth.getCurrentUser().sendEmailVerification();
+                                }
                             }
                         }
                     });
@@ -139,6 +172,20 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+
+    //ir para a tela de cadastro
+    public void gotoSignup(View view) {
+        Intent intent = new Intent(HomeActivity.this, CadastroPerfilActivity.class);
+        startActivity(intent);
+    }
+
+    //Ir para de de esqueceu a senha
+    public void gotoLastpassword(View view) {
+        Intent intent = new Intent(HomeActivity.this, EsqueceuasenhaActivity.class);
+        startActivity(intent);
+    }
+
+
     protected void onStart(){
         super.onStart();
         mAuth.addAuthStateListener(firebaseAuthStateListener);

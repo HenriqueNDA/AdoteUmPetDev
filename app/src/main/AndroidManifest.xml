@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.adoteumpet">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,12 +12,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CadastrarActivity"></activity>
+        <activity android:name=".Perfil.EditarPerfilPetActivity"></activity>
+        <activity android:name=".Perfil.ContaActivity" />
+        <activity android:name=".Cadastrar.Doar.CadastroPetFotoActivity" />
+        <activity android:name=".Cadastrar.Doar.CadastroPetinfoActivity" />
+        <activity android:name=".Cadastrar.CadastrarTipocontaActivity" />
+        <activity android:name=".Chat.VerPerfilActivity" />
+        <activity android:name=".ChatActivity" />
+        <activity
+            android:name=".Adicional.PrimeirousoActivity"
+            android:label="My Custom AppIntro" />
+        <activity android:name=".PetchActivity" />
+        <activity android:name=".Main.MainActivityPetch" />
+        <activity android:name=".Cadastrar.Adotar.CadastrarAdotarhistoriaActivity" />
+        <activity android:name=".Main.MainAcivityInfoPerfil" />
+        <activity android:name=".Cadastrar.CadastrarFotoActivity" />
+        <activity android:name=".Perfil.EditarperfilActivity" />
+        <activity android:name=".PerfilActivity" />
+        <activity android:name=".Cadastrar.Doar.CadastroPetActivity" />
+        <activity android:name=".Adicional.localizacaoActivity" />
+        <activity android:name=".Home.EsqueceuasenhaActivity" />
+        <activity android:name=".Cadastrar.VerificarEmailActivity" />
+        <activity android:name=".CadastroPerfilActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
